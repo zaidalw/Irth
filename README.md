@@ -22,11 +22,26 @@
 
 ## 🚀 Getting Started
 1. Clone the repository to your local machine.
-2. Open `index.html` in any modern browser OR use a local dev server (e.g., Live Server in VS Code).
-3. The app uses `esm.sh` for dependencies, so no `npm install` is required for basic local development.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the app locally:
+   ```bash
+   npm run dev
+   ```
+4. Build production assets:
+   ```bash
+   npm run build
+   ```
 
-## 📦 Deployment
-This app is ready for **GitHub Pages**. Simply push the code to a `main` branch and enable GitHub Pages in the repository settings. Ensure all file paths remain relative for the PWA to function correctly.
+## 📦 Deployment (GitHub Pages)
+This project includes a GitHub Actions workflow at `.github/workflows/deploy.yml`.
+
+1. Push the repository to GitHub on the `main` branch.
+2. In GitHub: `Settings` -> `Pages` -> `Build and deployment`.
+3. Select `Source: GitHub Actions`.
+4. Push to `main` again (or run the workflow manually) to publish.
 
 ---
 Built with ❤️ for the next generation of scholars.
