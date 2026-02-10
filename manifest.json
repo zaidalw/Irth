@@ -1,0 +1,22 @@
+
+{
+  "name": "إرث: أبطال الإيمان",
+  "short_name": "إرث",
+  "description": "Learn about the Prophets, Sahaba, and Scholars in an interactive way.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#065f46",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23065f46'/%3E%3Cpath d='M256 128l32 64h64l-48 48 16 64-64-32-64 32 16-64-48-48h64z' fill='white'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23065f46'/%3E%3Cpath d='M256 128l32 64h64l-48 48 16 64-64-32-64 32 16-64-48-48h64z' fill='white'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

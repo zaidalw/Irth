@@ -1,0 +1,5 @@
+{
+  "name": "إرث: أبطال الإيمان",
+  "description": "An interactive, kid-friendly educational app for Islamic history. Works fully offline as a PWA with local storage and native speech synthesis.",
+  "requestFramePermissions": []
+}
