@@ -199,7 +199,8 @@ const getNameMatchQuestionsLocally = (segment: Segment, lang: Language) => {
   const pool = SEED_PEOPLE.filter((p) => p.segment === segment);
   if (pool.length < 4) return [];
 
-  const targets = [...pool].sort(() => 0.5 - Math.random()).slice(0, 5);
+  // Run through all names (shuffled) so the quiz covers the full list.
+  const targets = [...pool].sort(() => 0.5 - Math.random());
 
   return targets.map((target) => {
     const correctText = lang === 'ar' ? target.name_ar : target.name_en;
