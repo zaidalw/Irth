@@ -101,13 +101,57 @@ export const TRANSLATIONS = {
 // ==========================================
 // 3. DATA: PEOPLE & QUESTIONS
 // ==========================================
-export const SEED_PEOPLE: Person[] = [
-  { id: 'adam', segment: Segment.PROPHETS, category: 'بداية الخلق', name_ar: 'آدم عليه السلام', name_en: 'Adam (AS)', facts_ar: ['أبو البشر وأول خليفة في الأرض', 'خلقه الله بيده من طين', 'أسجد الله له الملائكة'], facts_en: ['The father of humanity', 'Created from clay', 'Angels prostrated to him'] },
-  { id: 'nuh', segment: Segment.PROPHETS, category: 'أولو العزم', name_ar: 'نوح عليه السلام', name_en: 'Nuh (AS)', facts_ar: ['صاحب السفينة الشهيرة', 'دعا قومه 950 عاماً', 'لقب بشيخ المرسلين'], facts_en: ['The one with the Ark', 'Preached for 950 years', 'Senior Messenger'] },
-  { id: 'abu_bakr', segment: Segment.SAHABA, category: 'الخلفاء الراشدون', name_ar: 'أبو بكر الصديق', name_en: 'Abu Bakr Al-Siddiq', facts_ar: ['رفيق الهجرة وأول خليفة', 'أنفق ماله كله', 'لقب بالصديق'], facts_en: ['Companion in Hijra', 'First Caliph', 'Nicknamed As-Siddiq'] },
-  { id: 'khalid_walid', segment: Segment.SAHABA, category: 'القادة', name_ar: 'خالد بن الوليد', name_en: 'Khalid ibn al-Walid', facts_ar: ['لقبه النبي بسيف الله المسلول', 'لم يهزم في معركة قط', 'قائد اليرموك'], facts_en: ['The Sword of Allah', 'Never defeated', 'Leader at Yarmouk'] },
-  { id: 'malik', segment: Segment.SCHOLARS_DEVOUT, category: 'أئمة المذاهب', name_ar: 'الإمام مالك', name_en: 'Imam Malik', facts_ar: ['إمام دار الهجرة', 'صاحب الموطأ', 'كان يجل الحديث'], facts_en: ['Imam of Medina', 'Author of Al-Muwatta', 'Respected Hadith'] }
+const PROPHET_PEOPLE: Person[] = [
+  { id: 'prophet_adam', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'آدم عليه السلام', name_en: 'Adam (AS)', facts_ar: ['نبي من أنبياء الله', 'بداية قصة الإنسان في الأرض', 'تعلّم من قصته التوبة والرجوع إلى الله'], facts_en: ['A Prophet of Allah', 'The beginning of humanity’s story on earth', 'Lessons: repentance and turning back to Allah'] },
+  { id: 'prophet_idris', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'إدريس عليه السلام', name_en: 'Idris (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من سيرته الصدق والثبات'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: truthfulness and steadfastness'] },
+  { id: 'prophet_nuh', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'نوح عليه السلام', name_en: 'Nuh (AS)', facts_ar: ['نبي من أنبياء الله', 'صاحب السفينة الشهيرة', 'تعلّم من قصته الصبر والدعوة'], facts_en: ['A Prophet of Allah', 'Known for the Ark', 'Lessons: patience and calling to truth'] },
+  { id: 'prophet_hud', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'هود عليه السلام', name_en: 'Hud (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الثبات أمام التكذيب'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: standing firm against rejection'] },
+  { id: 'prophet_salih', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'صالح عليه السلام', name_en: 'Salih (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته طاعة الله وترك الفساد'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: obedience and avoiding corruption'] },
+  { id: 'prophet_ibrahim', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'إبراهيم عليه السلام', name_en: 'Ibrahim (AS)', facts_ar: ['نبي من أنبياء الله', 'قدوة في التوحيد', 'تعلّم من قصته الإخلاص والثبات'], facts_en: ['A Prophet of Allah', 'A model of monotheism', 'Lessons: sincerity and firmness'] },
+  { id: 'prophet_lut', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'لوط عليه السلام', name_en: 'Lut (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته النصيحة والصبر'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: counsel and patience'] },
+  { id: 'prophet_ismail', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'إسماعيل عليه السلام', name_en: 'Ismail (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الطاعة والوفاء'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: obedience and keeping promises'] },
+  { id: 'prophet_ishaq', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'إسحاق عليه السلام', name_en: 'Ishaq (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته بركة الإيمان'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: the blessings of faith'] },
+  { id: 'prophet_yaqub', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'يعقوب عليه السلام', name_en: 'Yaqub (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الصبر الجميل'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: beautiful patience'] },
+  { id: 'prophet_yusuf', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'يوسف عليه السلام', name_en: 'Yusuf (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته العفة والعفو'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: chastity and forgiveness'] },
+  { id: 'prophet_shuayb', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'شعيب عليه السلام', name_en: 'Shuayb (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته العدل في المعاملات'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: justice in dealings'] },
+  { id: 'prophet_ayyub', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'أيوب عليه السلام', name_en: 'Ayyub (AS)', facts_ar: ['نبي من أنبياء الله', 'قدوة في الصبر', 'تعلّم من قصته الرضا والدعاء'], facts_en: ['A Prophet of Allah', 'A model of patience', 'Lessons: contentment and supplication'] },
+  { id: 'prophet_dhul_kifl', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'ذو الكفل عليه السلام', name_en: 'Dhul-Kifl (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الوفاء بالمسؤولية'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: fulfilling responsibilities'] },
+  { id: 'prophet_musa', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'موسى عليه السلام', name_en: 'Musa (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن كثيراً', 'تعلّم من قصته الشجاعة والثقة بالله'], facts_en: ['A Prophet of Allah', 'Mentioned often in the Quran', 'Lessons: courage and trust in Allah'] },
+  { id: 'prophet_harun', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'هارون عليه السلام', name_en: 'Harun (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الحكمة والدعوة'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: wisdom and calling to good'] },
+  { id: 'prophet_dawud', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'داود عليه السلام', name_en: 'Dawud (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته العدل وذكر الله'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: justice and remembrance of Allah'] },
+  { id: 'prophet_sulayman', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'سليمان عليه السلام', name_en: 'Sulayman (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الشكر والحكمة'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: gratitude and wisdom'] },
+  { id: 'prophet_ilyas', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'إلياس عليه السلام', name_en: 'Ilyas (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الثبات على الحق'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: steadfastness upon truth'] },
+  { id: 'prophet_al_yasa', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'اليسع عليه السلام', name_en: 'Al-Yasa (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الصلاح والاستقامة'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: righteousness and uprightness'] },
+  { id: 'prophet_yunus', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'يونس عليه السلام', name_en: 'Yunus (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الدعاء والتوبة'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: supplication and repentance'] },
+  { id: 'prophet_zakariya', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'زكريا عليه السلام', name_en: 'Zakariya (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته حسن الظن بالله'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: having good expectations of Allah'] },
+  { id: 'prophet_yahya', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'يحيى عليه السلام', name_en: 'Yahya (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الطهارة والصدق'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: purity and truthfulness'] },
+  { id: 'prophet_isa', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'عيسى عليه السلام', name_en: 'Isa (AS)', facts_ar: ['نبي من أنبياء الله', 'ذُكر في القرآن', 'تعلّم من قصته الرحمة والدعوة'], facts_en: ['A Prophet of Allah', 'Mentioned in the Quran', 'Lessons: mercy and calling to Allah'] },
+  { id: 'prophet_muhammad', segment: Segment.PROPHETS, category: 'الأنبياء', name_ar: 'محمد ﷺ', name_en: 'Muhammad ﷺ', facts_ar: ['رسول الله وخاتم الأنبياء', 'قدوة الرحمة والأخلاق', 'تعلّم من سيرته الصدق والأمانة'], facts_en: ['The Messenger of Allah and the last Prophet', 'A model of mercy and character', 'Lessons: truthfulness and trustworthiness'] },
 ];
+
+const SAHABA_PEOPLE: Person[] = [
+  { id: 'sahabi_abu_bakr', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'أبو بكر الصديق', name_en: 'Abu Bakr Al-Siddiq', facts_ar: ['من كبار الصحابة', 'رفيق الهجرة وأول خليفة', 'قدوة في الصدق والتضحية'], facts_en: ['A great companion', 'Companion in Hijra and first Caliph', 'Lessons: truthfulness and sacrifice'] },
+  { id: 'sahabi_umar', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'عمر بن الخطاب', name_en: 'Omar ibn al-Khattab', facts_ar: ['من كبار الصحابة', 'ثاني الخلفاء الراشدين', 'قدوة في العدل والقوة في الحق'], facts_en: ['A great companion', 'Second Rightly Guided Caliph', 'Lessons: justice and strength upon truth'] },
+  { id: 'sahabi_uthman', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'عثمان بن عفان', name_en: 'Uthman ibn Affan', facts_ar: ['من كبار الصحابة', 'ثالث الخلفاء الراشدين', 'قدوة في الحياء والإنفاق'], facts_en: ['A great companion', 'Third Rightly Guided Caliph', 'Lessons: modesty and generosity'] },
+  { id: 'sahabi_ali', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'علي بن أبي طالب', name_en: 'Ali ibn Abi Talib', facts_ar: ['من كبار الصحابة', 'رابع الخلفاء الراشدين', 'قدوة في العلم والشجاعة'], facts_en: ['A great companion', 'Fourth Rightly Guided Caliph', 'Lessons: knowledge and courage'] },
+  { id: 'sahabi_bilal', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'بلال بن رباح', name_en: 'Bilal ibn Rabah', facts_ar: ['من كبار الصحابة', 'أول مؤذن في الإسلام', 'قدوة في الصبر والثبات'], facts_en: ['A great companion', 'The first muezzin in Islam', 'Lessons: patience and steadfastness'] },
+  { id: 'sahabi_khalid', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'خالد بن الوليد', name_en: 'Khalid ibn al-Walid', facts_ar: ['من كبار الصحابة', 'لقبه النبي بسيف الله المسلول', 'قدوة في الشجاعة والإخلاص'], facts_en: ['A great companion', 'Nicknamed The Sword of Allah', 'Lessons: courage and sincerity'] },
+  { id: 'sahabi_hamza', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'حمزة بن عبد المطلب', name_en: 'Hamza ibn Abd al-Muttalib', facts_ar: ['من كبار الصحابة', 'لقب بأسد الله', 'قدوة في النصرة والثبات'], facts_en: ['A great companion', 'Nicknamed The Lion of Allah', 'Lessons: support and steadfastness'] },
+  { id: 'sahabi_zubair', segment: Segment.SAHABA, category: 'الصحابة', name_ar: 'الزبير بن العوام', name_en: 'Zubair ibn al-Awwam', facts_ar: ['من كبار الصحابة', 'من السابقين الأولين', 'قدوة في الشجاعة والوفاء'], facts_en: ['A great companion', 'Among the early believers', 'Lessons: courage and loyalty'] },
+];
+
+const SCHOLAR_PEOPLE: Person[] = [
+  { id: 'scholar_malik', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام مالك', name_en: 'Imam Malik', facts_ar: ['إمام من أئمة الفقه', 'صاحب الموطأ', 'قدوة في تعظيم الحديث'], facts_en: ['A leading jurist', 'Author of Al-Muwatta', 'Lessons: honoring Hadith'] },
+  { id: 'scholar_abu_hanifa', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام أبو حنيفة', name_en: 'Imam Abu Hanifa', facts_ar: ['إمام من أئمة الفقه', 'من كبار علماء الأمة', 'قدوة في الاجتهاد والورع'], facts_en: ['A leading jurist', 'Among the great scholars', 'Lessons: ijtihad and piety'] },
+  { id: 'scholar_shafii', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام الشافعي', name_en: 'Imam Al-Shafi\'i', facts_ar: ['إمام من أئمة الفقه', 'من كبار علماء الأمة', 'قدوة في العلم والأدب'], facts_en: ['A leading jurist', 'Among the great scholars', 'Lessons: knowledge and etiquette'] },
+  { id: 'scholar_ahmad', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام أحمد بن حنبل', name_en: 'Imam Ahmad ibn Hanbal', facts_ar: ['إمام من أئمة السنة', 'صبر في المحنة', 'قدوة في الثبات على الحق'], facts_en: ['A leading Sunni Imam', 'Endured hardship with patience', 'Lessons: firmness upon truth'] },
+  { id: 'scholar_bukhari', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام البخاري', name_en: 'Imam Al-Bukhari', facts_ar: ['إمام في الحديث', 'صاحب صحيح البخاري', 'قدوة في الدقة والأمانة العلمية'], facts_en: ['A Hadith scholar', 'Compiler of Sahih al-Bukhari', 'Lessons: precision and integrity'] },
+  { id: 'scholar_muslim', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام مسلم', name_en: 'Imam Muslim', facts_ar: ['إمام في الحديث', 'صاحب صحيح مسلم', 'قدوة في التثبت'], facts_en: ['A Hadith scholar', 'Compiler of Sahih Muslim', 'Lessons: verification and care'] },
+  { id: 'scholar_nawawi', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام النووي', name_en: 'Imam Al-Nawawi', facts_ar: ['إمام في العلم', 'من كبار العلماء', 'قدوة في الزهد والإخلاص'], facts_en: ['A leading scholar', 'Among the great ulama', 'Lessons: asceticism and sincerity'] },
+  { id: 'scholar_ibn_kathir', segment: Segment.SCHOLARS_DEVOUT, category: 'العلماء', name_ar: 'الإمام ابن كثير', name_en: 'Imam Ibn Kathir', facts_ar: ['إمام في التفسير', 'من كبار العلماء', 'قدوة في خدمة القرآن'], facts_en: ['A Tafsir scholar', 'Among the great ulama', 'Lessons: serving the Quran'] },
+];
+
+export const SEED_PEOPLE: Person[] = [...PROPHET_PEOPLE, ...SAHABA_PEOPLE, ...SCHOLAR_PEOPLE];
 
 export interface LocalQuestion { id: string; segment: Segment; prompt_ar: string; prompt_en: string; correct_ar: string; correct_en: string; distractors_ar: string[]; distractors_en: string[]; }
 
@@ -149,6 +193,35 @@ const getPromptQuestionsLocally = (segment: Segment) => {
         : 'scholars';
   const pool = PROMPT_POOL_BY_BANK[bank];
   return [...pool].sort(() => 0.5 - Math.random()).slice(0, 5);
+};
+
+const getNameMatchQuestionsLocally = (segment: Segment, lang: Language) => {
+  const pool = SEED_PEOPLE.filter((p) => p.segment === segment);
+  if (pool.length < 4) return [];
+
+  const targets = [...pool].sort(() => 0.5 - Math.random()).slice(0, 5);
+
+  return targets.map((target) => {
+    const correctText = lang === 'ar' ? target.name_ar : target.name_en;
+    const prompt =
+      lang === 'ar'
+        ? `ما الاسم الصحيح بالعربية لـ "${target.name_en}"؟`
+        : `What is the English name for "${target.name_ar}"?`;
+
+    const correctOption = { id: 'correct', text: correctText };
+    const distractorOptions = [...pool]
+      .filter((p) => p.id !== target.id)
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
+      .map((p, i) => ({ id: `dist_${i}`, text: lang === 'ar' ? p.name_ar : p.name_en }));
+
+    return {
+      id: `name_${target.id}`,
+      prompt,
+      correctId: 'correct',
+      options: [correctOption, ...distractorOptions].sort(() => 0.5 - Math.random()),
+    };
+  });
 };
 
 // ==========================================
@@ -392,6 +465,94 @@ const QuizView: React.FC<{ lang: Language; segment: Segment; onFinish: (score: n
   );
 };
 
+const NameQuizView: React.FC<{ lang: Language; segment: Segment; onFinish: (score: number) => void }> = ({ lang, segment, onFinish }) => {
+  const t = TRANSLATIONS[lang];
+  const [step, setStep] = useState(0);
+  const [score, setScore] = useState(0);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const questions = useMemo(() => getNameMatchQuestionsLocally(segment, lang), [segment, lang]);
+
+  const cancelSpeech = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  }, []);
+
+  const speakText = useCallback((text: string) => {
+    if (typeof window === 'undefined') return;
+    if (!('speechSynthesis' in window)) return;
+    cancelSpeech();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const hasArabic = /[\\u0600-\\u06FF]/.test(text);
+    utterance.lang = hasArabic ? 'ar-SA' : 'en-US';
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(utterance);
+  }, [cancelSpeech]);
+
+  useEffect(() => {
+    if (questions[step]) speakText(questions[step].prompt);
+    return () => cancelSpeech();
+  }, [step, questions, speakText, cancelSpeech]);
+
+  const handleSelect = (id: string) => {
+    if (selectedId) return;
+    setSelectedId(id);
+    cancelSpeech();
+    if (id === questions[step].correctId) { setScore((s) => s + 10); sounds.play('correct'); } else { sounds.play('wrong'); }
+  };
+
+  const nextStep = () => {
+    if (step < questions.length - 1) {
+      setStep((s) => s + 1);
+      setSelectedId(null);
+      sounds.play('click');
+      return;
+    }
+    sounds.play('success');
+    onFinish(score);
+  };
+
+  if (!questions.length) return <div className="p-20 text-center font-bold">Not enough names found.</div>;
+  const currentQ = questions[step];
+
+  return (
+    <div className="max-w-xl mx-auto p-6 space-y-8">
+      <div className="flex justify-between items-center bg-emerald-50 p-4 rounded-xl border border-emerald-100 shadow-sm">
+        <span className="font-bold text-emerald-900">{t.score}: {score} XP</span>
+        <span className="font-bold text-emerald-900">{step + 1} / {questions.length}</span>
+      </div>
+
+      <div className="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-emerald-700 relative">
+        <div className="flex flex-col items-center">
+          <button onClick={() => speakText(currentQ.prompt)} className={`mb-4 p-3 rounded-full transition-all active:scale-90 ${isSpeaking ? 'bg-emerald-100 text-emerald-600 animate-pulse scale-110' : 'bg-slate-100 text-slate-400 hover:text-emerald-500'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+          </button>
+          <p className="text-xl md:text-2xl font-black text-center text-slate-800 mb-10 leading-relaxed">"{currentQ.prompt}"</p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          {currentQ.options.map((opt) => (
+            <button key={opt.id} disabled={!!selectedId} onClick={() => handleSelect(opt.id)} className={`p-5 rounded-2xl font-black text-lg border-2 transition-all flex justify-between items-center shadow-sm relative group ${selectedId === opt.id ? (opt.id === currentQ.correctId ? 'bg-emerald-100 border-emerald-500 text-emerald-900' : 'bg-red-100 border-red-500 text-red-900') : (selectedId && opt.id === currentQ.correctId ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-white border-slate-100 hover:border-emerald-300 text-slate-800 hover:bg-slate-50')}`}>
+              {!selectedId && <div onClick={(e) => { e.stopPropagation(); speakText(opt.text); }} className="absolute left-4 opacity-40 group-hover:opacity-100 hover:text-emerald-600 transition-opacity p-2 rounded-full hover:bg-emerald-50"><svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg></div>}
+              <span className="flex-grow text-center px-8">{opt.text}</span>
+              {selectedId && opt.id === currentQ.correctId && <span className="text-emerald-600 absolute right-4">✓</span>}
+              {selectedId === opt.id && opt.id !== currentQ.correctId && <span className="text-red-600 absolute right-4">✗</span>}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {selectedId && (
+        <button onClick={nextStep} className="w-full bg-emerald-700 text-white py-5 rounded-2xl font-black text-xl shadow-lg hover:bg-emerald-800 transition-all active:scale-95">
+          {step === questions.length - 1 ? (lang === 'ar' ? 'إنهاء التحدي' : 'Finish Challenge') : t.next}
+        </button>
+      )}
+    </div>
+  );
+};
+
 const PromptQuizView: React.FC<{ lang: Language; segment: Segment; onFinish: (score: number) => void }> = ({ lang, segment, onFinish }) => {
   const t = TRANSLATIONS[lang];
   const [step, setStep] = useState(0);
@@ -452,8 +613,9 @@ const PromptQuizView: React.FC<{ lang: Language; segment: Segment; onFinish: (sc
       </div>
 
       <div className="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-emerald-700 relative">
-        <div className="flex items-center justify-between mb-6 text-xs font-bold text-slate-500">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-6 text-xs font-bold text-slate-500">
           <span className="bg-slate-100 px-3 py-1 rounded-full">{currentQ.bank}</span>
+          {currentQ.person && <span className="bg-slate-100 px-3 py-1 rounded-full">{currentQ.person}</span>}
           <span className="bg-slate-100 px-3 py-1 rounded-full">{currentQ.format} • LVL {currentQ.difficulty}</span>
         </div>
 
@@ -546,6 +708,9 @@ const StudyView: React.FC<{ lang: Language; segment: Segment; onFinish: () => vo
         <button onClick={() => { sounds.play('nav'); setView('prompt_quiz'); }} className="bg-emerald-700 text-white px-8 py-4 rounded-full font-black shadow-lg hover:bg-emerald-800 transition-all hover:scale-105 active:scale-95">
           {lang === 'ar' ? 'تحدي كتابي' : 'Writing Challenge'}
         </button>
+        <button onClick={() => { sounds.play('nav'); setView('name_quiz'); }} className="bg-indigo-700 text-white px-8 py-4 rounded-full font-black shadow-lg hover:bg-indigo-800 transition-all hover:scale-105 active:scale-95">
+          {lang === 'ar' ? 'اختبار الأسماء' : 'Name Match'}
+        </button>
       </div>
       <div className={`w-full max-w-md h-[400px] flip-card ${flipped ? 'flipped' : ''}`}>
         <div className="flip-card-inner">
@@ -607,6 +772,7 @@ const App: React.FC = () => {
       case 'compete': return <Leaderboard lang={lang} user={user} onUpdateUser={setUser} />;
       case 'study': return selectedSegment ? <StudyView lang={lang} segment={selectedSegment} onFinish={() => setView('home')} setView={setView} /> : null;
       case 'quiz': return selectedSegment ? <QuizView lang={lang} segment={selectedSegment} onFinish={handleQuizFinish} /> : null;
+      case 'name_quiz': return selectedSegment ? <NameQuizView lang={lang} segment={selectedSegment} onFinish={handleQuizFinish} /> : null;
       case 'prompt_quiz': return selectedSegment ? <PromptQuizView lang={lang} segment={selectedSegment} onFinish={handleQuizFinish} /> : null;
       default: return <Home lang={lang} onSelect={(s) => { setSelectedSegment(s); setView('study'); }} user={user} />;
     }
