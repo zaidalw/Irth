@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { PROMPT_QUESTIONS_2100, type PromptBank, type PromptQuestion2100 } from './data/promptQuestions2100';
 
 // ==========================================
 // 1. TYPES & INTERFACES
@@ -129,6 +130,25 @@ export const getQuestionsLocally = (segment: Segment, lang: Language) => {
     const distractorOptions = (lang === 'ar' ? q.distractors_ar : q.distractors_en).map((d, i) => ({ id: `dist_${i}`, text: d }));
     return { id: q.id, prompt: lang === 'ar' ? q.prompt_ar : q.prompt_en, correctId: 'correct', options: [correctOption, ...distractorOptions].sort(() => 0.5 - Math.random()) };
   });
+};
+
+const PROMPT_POOL_BY_BANK: Record<PromptBank, PromptQuestion2100[]> = PROMPT_QUESTIONS_2100.reduce(
+  (acc, q) => {
+    acc[q.bank].push(q);
+    return acc;
+  },
+  { prophets: [], companions: [], scholars: [] }
+);
+
+const getPromptQuestionsLocally = (segment: Segment) => {
+  const bank: PromptBank =
+    segment === Segment.PROPHETS
+      ? 'prophets'
+      : segment === Segment.SAHABA
+        ? 'companions'
+        : 'scholars';
+  const pool = PROMPT_POOL_BY_BANK[bank];
+  return [...pool].sort(() => 0.5 - Math.random()).slice(0, 5);
 };
 
 // ==========================================
@@ -372,6 +392,94 @@ const QuizView: React.FC<{ lang: Language; segment: Segment; onFinish: (score: n
   );
 };
 
+const PromptQuizView: React.FC<{ lang: Language; segment: Segment; onFinish: (score: number) => void }> = ({ lang, segment, onFinish }) => {
+  const t = TRANSLATIONS[lang];
+  const [step, setStep] = useState(0);
+  const [score, setScore] = useState(0);
+  const [answer, setAnswer] = useState('');
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const questions = useMemo(() => getPromptQuestionsLocally(segment), [segment]);
+
+  const cancelSpeech = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  }, []);
+
+  const speakText = useCallback((text: string) => {
+    if (typeof window === 'undefined') return;
+    if (!('speechSynthesis' in window)) return;
+    cancelSpeech();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const hasArabic = /[\\u0600-\\u06FF]/.test(text);
+    utterance.lang = hasArabic ? 'ar-SA' : 'en-US';
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(utterance);
+  }, [cancelSpeech]);
+
+  useEffect(() => {
+    if (questions[step]) speakText(questions[step].question);
+    return () => cancelSpeech();
+  }, [step, questions, speakText, cancelSpeech]);
+
+  const nextStep = () => {
+    const earned = answer.trim() ? 10 : 0;
+    const newScore = score + earned;
+    setScore(newScore);
+    setAnswer('');
+    cancelSpeech();
+
+    if (step < questions.length - 1) {
+      setStep((s) => s + 1);
+      sounds.play('click');
+      return;
+    }
+
+    sounds.play('success');
+    onFinish(newScore);
+  };
+
+  if (!questions.length) return <div className="p-20 text-center font-bold">No questions found.</div>;
+  const currentQ = questions[step];
+  const questionDir = /[\\u0600-\\u06FF]/.test(currentQ.question) ? 'rtl' : 'ltr';
+
+  return (
+    <div className="max-w-xl mx-auto p-6 space-y-8">
+      <div className="flex justify-between items-center bg-emerald-50 p-4 rounded-xl border border-emerald-100 shadow-sm">
+        <span className="font-bold text-emerald-900">{t.score}: {score} XP</span>
+        <span className="font-bold text-emerald-900">{step + 1} / {questions.length}</span>
+      </div>
+
+      <div className="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-emerald-700 relative">
+        <div className="flex items-center justify-between mb-6 text-xs font-bold text-slate-500">
+          <span className="bg-slate-100 px-3 py-1 rounded-full">{currentQ.bank}</span>
+          <span className="bg-slate-100 px-3 py-1 rounded-full">{currentQ.format} • LVL {currentQ.difficulty}</span>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <button onClick={() => speakText(currentQ.question)} className={`mb-4 p-3 rounded-full transition-all active:scale-90 ${isSpeaking ? 'bg-emerald-100 text-emerald-600 animate-pulse scale-110' : 'bg-slate-100 text-slate-400 hover:text-emerald-500'}`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+          </button>
+          <p dir={questionDir} className="text-xl md:text-2xl font-black text-center text-slate-800 mb-6 leading-relaxed">"{currentQ.question}"</p>
+        </div>
+
+        <textarea
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          rows={6}
+          placeholder={lang === 'ar' ? 'اكتب إجابتك هنا (اختياري)' : 'Write your answer here (optional)'}
+          className="w-full p-4 border-2 border-slate-100 rounded-2xl text-base font-bold text-slate-800 placeholder:text-slate-300 outline-none focus:border-emerald-500"
+        />
+      </div>
+
+      <button onClick={nextStep} className="w-full bg-emerald-700 text-white py-5 rounded-2xl font-black text-xl shadow-lg hover:bg-emerald-800 transition-all active:scale-95">
+        {step === questions.length - 1 ? (lang === 'ar' ? 'إنهاء التحدي' : 'Finish Challenge') : t.next}
+      </button>
+    </div>
+  );
+};
+
 const Leaderboard: React.FC<{ lang: Language; user: UserProfile; onUpdateUser: (u: UserProfile) => void }> = ({ lang, user, onUpdateUser }) => {
   const t = TRANSLATIONS[lang]; const [tab, setTab] = useState<'global' | 'friends'>('global');
   const [allUsers, setAllUsers] = useState<LeaderboardEntry[]>([]); const [followingIds, setFollowingIds] = useState<string[]>([]);
@@ -431,7 +539,14 @@ const StudyView: React.FC<{ lang: Language; segment: Segment; onFinish: () => vo
   const person = people[index];
   return (
     <div className="flex flex-col items-center p-4 gap-8">
-      <button onClick={() => { sounds.play('nav'); setView('quiz'); }} className="bg-amber-500 text-white px-8 py-4 rounded-full font-black shadow-lg hover:bg-amber-600 transition-all hover:scale-105 active:scale-95">Start Quiz ✨</button>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <button onClick={() => { sounds.play('nav'); setView('quiz'); }} className="bg-amber-500 text-white px-8 py-4 rounded-full font-black shadow-lg hover:bg-amber-600 transition-all hover:scale-105 active:scale-95">
+          {lang === 'ar' ? 'اختبار سريع' : 'Quick Quiz'} ✨
+        </button>
+        <button onClick={() => { sounds.play('nav'); setView('prompt_quiz'); }} className="bg-emerald-700 text-white px-8 py-4 rounded-full font-black shadow-lg hover:bg-emerald-800 transition-all hover:scale-105 active:scale-95">
+          {lang === 'ar' ? 'تحدي كتابي' : 'Writing Challenge'}
+        </button>
+      </div>
       <div className={`w-full max-w-md h-[400px] flip-card ${flipped ? 'flipped' : ''}`}>
         <div className="flip-card-inner">
           <div className="flip-card-front bg-white flex flex-col items-center justify-center p-8 rounded-3xl shadow-xl border border-emerald-50">
@@ -492,6 +607,7 @@ const App: React.FC = () => {
       case 'compete': return <Leaderboard lang={lang} user={user} onUpdateUser={setUser} />;
       case 'study': return selectedSegment ? <StudyView lang={lang} segment={selectedSegment} onFinish={() => setView('home')} setView={setView} /> : null;
       case 'quiz': return selectedSegment ? <QuizView lang={lang} segment={selectedSegment} onFinish={handleQuizFinish} /> : null;
+      case 'prompt_quiz': return selectedSegment ? <PromptQuizView lang={lang} segment={selectedSegment} onFinish={handleQuizFinish} /> : null;
       default: return <Home lang={lang} onSelect={(s) => { setSelectedSegment(s); setView('study'); }} user={user} />;
     }
   };
